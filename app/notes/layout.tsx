@@ -1,14 +1,12 @@
-export default function NotesLayout({
-  children,
-  modal,
-}: {
+type Props = {
   children: React.ReactNode;
-  modal: React.ReactNode;
-}) {
+  sidebar: React.ReactNode;
+};
+export default function NotesLayout({ children, sidebar }: Props) {
   return (
-    <>
-      {children}
-      {modal}
-    </>
+    <section>
+      <aside>{sidebar}</aside>
+      <div>{children}</div>
+    </section>
   );
 }

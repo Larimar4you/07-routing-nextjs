@@ -12,7 +12,7 @@ export default function TanStackProvider({ children }: Props) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60,
+            staleTime: 60 * 1000,
             refetchOnWindowFocus: false,
           },
         },

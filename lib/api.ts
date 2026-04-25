@@ -1,10 +1,16 @@
-import axios, { type AxiosResponse } from "axios";
-import type {
-  NewNote,
-  Note,
-  FetchNotesParams,
-  FetchNotesResponse,
-} from "../types/note";
+import axios, { AxiosResponse } from "axios";
+import type { Note } from "../types/note";
+
+interface NoteResponse {
+  notes: Note[];
+  totalPages: number;
+}
+
+interface NewNote {
+  title: string;
+  content: string;
+  tag: string;
+}
 
 const BASE_URL = process.env.NEXT_PUBLIC_NOTEHUB_API_URL;
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -16,22 +22,8 @@ const noteHubApi = axios.create({
   },
 });
 
-interface NoteResponse {
-  notes: Note[];
-  totalPages: number;
-}
-
-export const fetchNotes = async (
-  page: number,
-  search: string,
-): Promise<NoteResponse> => {
-  const response = await noteHubApi.get<NoteResponse>(`/notes`, {
-    params: {
-      page,
-      perPage: 12,
-      search,
-    },
-  });
+export const createNote = async (newNote: NewNote): Promise<Note> => {
+  const response = await noteHubApi.post<Note>("/notes", newNote);
   return response.data;
 };
 
@@ -40,14 +32,14 @@ export const fetchNoteById = async (id: string): Promise<Note> => {
   return response.data;
 };
 
-export const createNote = async (newNote: NewNote): Promise<Note> => {
-  const response = await noteHubApi.post<Note>("/notes", newNote);
+export const deleteNote = async (id: string): Promise<Note> => {
+  const response = await noteHubApi.delete<Note>(`/notes/${id}`);
   return response.data;
 };
 
-export const deleteNote = async (id: string): Promise<Note> => {
-  const response: AxiosResponse<Note> = await noteHubApi.delete<Note>(
-    `/notes/${id}`,
-  );
+export const getNotesByTag = async (tag?: string): Promise<NoteResponse> => {
+  const response = await noteHubApi.get<NoteResponse>(`/notes`, {
+    params: { tag },
+  });
   return response.data;
 };
