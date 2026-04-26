@@ -9,8 +9,8 @@ type Props = {
 export default function NotesFilterLayout({ children, sidebar, modal }: Props) {
   return (
     <section className={css.container}>
-      <aside>{sidebar}</aside>
-      <div>{children}</div>
+      <aside className={css.sidebar}>{sidebar}</aside>
+      <div className={css.notesWrapper}>{children}</div>
       {modal}
     </section>
   );
