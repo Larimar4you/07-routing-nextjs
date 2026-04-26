@@ -1,15 +1,9 @@
-import axios, { AxiosResponse } from "axios";
-import type { Note } from "../types/note";
+import axios from "axios";
+import type { Note, NewNote } from "../types/note";
 
 interface NoteResponse {
   notes: Note[];
   totalPages: number;
-}
-
-interface NewNote {
-  title: string;
-  content: string;
-  tag: string;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_NOTEHUB_API_URL;
@@ -38,8 +32,8 @@ export const deleteNote = async (id: string): Promise<Note> => {
 };
 
 export const getNotesByTag = async (tag?: string): Promise<NoteResponse> => {
-  const response = await noteHubApi.get<NoteResponse>(`/notes`, {
-    params: { tag },
+  const response = await noteHubApi.get<NoteResponse>("/notes", {
+    params: tag ? { tag } : {},
   });
   return response.data;
 };

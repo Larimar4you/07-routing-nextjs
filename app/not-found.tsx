@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import css from "./page.module.css";
+import css from "./Home.module.css";
 
 export default function NotFound() {
   const router = useRouter();
