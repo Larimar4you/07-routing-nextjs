@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import css from "./Home.module.css";
+import css from "./page.module.css";
 
 export default function NotFound() {
   const router = useRouter();
