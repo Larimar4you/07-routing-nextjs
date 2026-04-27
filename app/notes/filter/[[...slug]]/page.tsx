@@ -1,13 +1,15 @@
 import NotesPage from "@/components/NotesPage/NotesPage";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug?: string[];
-  };
+  }>;
 };
 
 export default async function FilterNotesPage({ params }: Props) {
-  const tagFromUrl = params.slug?.[0];
+  const { slug } = await params;
+
+  const tagFromUrl = slug?.[0];
 
   const tag = tagFromUrl === "all" ? undefined : tagFromUrl;
 
