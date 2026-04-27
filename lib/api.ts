@@ -31,9 +31,32 @@ export const deleteNote = async (id: string): Promise<Note> => {
   return response.data;
 };
 
-export const getNotesByTag = async (tag?: string): Promise<NoteResponse> => {
+export const getNotesByTag = async (
+  page: number = 1,
+  search: string = "",
+  tag?: string,
+): Promise<NoteResponse> => {
+  const params: {
+    page: number;
+    perPage: number;
+    search?: string;
+    tag?: string;
+  } = {
+    page,
+    perPage: 12,
+  };
+
+  if (search.trim()) {
+    params.search = search;
+  }
+
+  if (tag) {
+    params.tag = tag;
+  }
+
   const response = await noteHubApi.get<NoteResponse>("/notes", {
-    params: tag ? { tag } : {},
+    params,
   });
+
   return response.data;
 };
