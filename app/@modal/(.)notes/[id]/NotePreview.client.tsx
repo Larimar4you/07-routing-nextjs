@@ -21,7 +21,7 @@ export default function NotePreview({ id }: Props) {
   } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
-    refetchOnMount: false, // 👈 обязательно для проверки
+    refetchOnMount: false,
   });
 
   const closeModal = () => {
@@ -35,11 +35,22 @@ export default function NotePreview({ id }: Props) {
 
       {note && (
         <div className={css.container}>
-          <button onClick={closeModal}>Close</button>
-          <h2 className={css.title}>{note.title}</h2>
-          <p className={css.content}>{note.content}</p>
-          <p className={css.tag}>{note.tag}</p>
-          <p>{note.createdAt}</p> {/* 👈 тоже обязателен */}
+          <div className={css.item}>
+            <button type="button" className={css.backBtn} onClick={closeModal}>
+              Back
+            </button>
+
+            <div className={css.header}>
+              <h2>{note.title}</h2>
+              <span className={css.tag}>{note.tag}</span>
+            </div>
+
+            <p className={css.content}>{note.content}</p>
+
+            <p className={css.date}>
+              {new Date(note.createdAt).toLocaleDateString()}
+            </p>
+          </div>
         </div>
       )}
     </Modal>
